@@ -12,3 +12,6 @@ In this project, I designed and built end to end data architecture for a cloud b
 
 ## Dataset
 Data has been used from Yelp website (list of businesses, restaurants, customer reviews and ratings), climatic source systems (temperature and precipitation data) and COVID19 data. Row counts: business ~209K, users ~2M, check-in ~175K, COVID ~209K, tips ~1.3M, review ~8M, temperature  ~110k, precipitation ~55K.
+
+
+--
