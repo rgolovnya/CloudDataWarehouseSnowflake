@@ -14,11 +14,14 @@ In this project, I designed and built end to end data architecture for a cloud b
 
 https://www.yelp.com/dataset/download https://crt-climate-explorer.nemac.org/
 
-
+https://www.kaggle.com/datasets/claudiadodge/yelp-academic-data-set-covid-features
 
 •	Data 1: yelp_dataset.tar
+
 •	Data 2: covid_19_dataset.tar
+
 •	Data 3: USC00362574-temperature-degreeFcsv
+
 •	Data 4: USC00362574-EMSWORTH_L_D_OHIO_RIVER-precipitation-inch.csv
 
 
