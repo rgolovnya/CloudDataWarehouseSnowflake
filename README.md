@@ -15,3 +15,7 @@ Data has been used from Yelp website (list of businesses, restaurants, customer 
 
 
 ![DA](diagrams/DataArchitecture.PNG)
+
+
+
+![DA](diagrams/ERdiagram.PNG)
