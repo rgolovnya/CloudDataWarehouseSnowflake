@@ -1,0 +1,70 @@
+create schema DW;
+
+create table dimtemperature(date timestamp, temperature_min integer, temperature_max integer, normal_min float, normal_max float);
+
+insert into dimtemperature select date timestamp, temperature_min, temperature_max, normal_min, normal_max from PROJECTYELPRATINGSWEATHER.ODS.TEMPERATURE;
+
+drop table precipitation;
+create table dimprecipitation(date timestamp, precipitation float, precipitation_normal float);
+
+insert into dimprecipitation select date timestamp, precipitation, precipitation_normal from PROJECTYELPRATINGSWEATHER.ODS.PRECIPITATION;
+
+
+drop table Businesses;
+
+
+create table dimbusinesses(business_id string, business_name string, address string, city string, state string, postal_code string, latitude float, longitude float,
+stars float, review_count integer, is_open integer);
+
+insert into dimbusinesses
+select business_id, business_name, address, city, state, postal_code, latitude, longitude,
+stars, review_count, is_open
+ from PROJECTYELPRATINGSWEATHER.ODS.BUSINESSES;
+
+
+
+drop table Users;
+
+create table dimusers(user_id string, user_name string, yelping_since timestamp, review_count integer, useful integer,
+ funny integer, cool integer, fans integer, average_stars float);
+
+
+insert into dimusers
+select
+ user_id, user_name, yelping_since, review_count,  useful, funny, cool,
+ fans, average_stars
+ from PROJECTYELPRATINGSWEATHER.ODS.USERS;
+
+
+
+create table dimreviews(review_id string, user_id string, business_id string, stars integer, date timestamp, useful integer, funny integer, cool integer, text string);
+
+
+insert into dimreviews
+select review_id, user_id, business_id,
+	stars, date, useful, funny,
+ 	cool, text 
+ from PROJECTYELPRATINGSWEATHER.ODS.REVIEWS;
+
+
+create table fact_reviews_weather(review_id string, user_id string, business_id string, business_name string, date timestamp, temperature_min integer, temperature_max integer, precipitation float, stars float,
+constraint fk_review_id  foreign key (review_id)
+references ods.REVIEWS(review_id),
+constraint fk_user_id foreign key (user_id)
+references ods.USERS(user_id),
+constraint fk_business_id foreign key (business_id)
+references ods.BUSINESSES(business_id),
+constraint fk_date_temperature foreign key (date)
+references ods.TEMPERATURE(date),
+constraint fk_date_precipitation foreign key (date)
+references ods.PRECIPITATION(date));
+
+
+insert into fact_reviews_weather
+select R.review_id, U.user_id, B.business_id, B.business_name, T.date, T.temperature_min, T.temperature_max, P.precipitation,B.stars
+ from ODS.REVIEWS R, ODS.USERS U, ODS.BUSINESSES B, ODS.TEMPERATURE T, ODS.PRECIPITATION P
+where (date_trunc('day', R.date) = date_trunc('day', T.date)) and (date_trunc('day', R.date) = date_trunc('day', P.date) and (R.business_id = B.business_id)) limit 1000;
+
+
+
+

@@ -1,0 +1,11 @@
+select B.name, R.stars,T.date, T.min , T.max, P.precipitation from reviews R
+left outer join temperature T
+left outer join precipitation P
+left outer join businesses B
+	on R.business_id = B.business_id
+    where (date_trunc('day', R.date) = date_trunc('day', T.date)) and (date_trunc('day', R.date) = date_trunc('day', P.date));
+
+
+select R.review_id, U.user_id, B.business_id, T.date, T.temperature_min, T.temperature_max, P.precipitation,B.stars
+ from ODS.REVIEWS R, ODS.USERS U, ODS.BUSINESSES B, ODS.TEMPERATURE T, ODS.PRECIPITATION P
+where (date_trunc('day', R.date) = date_trunc('day', T.date)) and (date_trunc('day', R.date) = date_trunc('day', P.date) and (R.business_id = B.business_id));

@@ -1,0 +1,3 @@
+select business_name, temperature_min, temperature_max, precipitation, stars from "PROJECTYELPRATINGSWEATHER"."DW"."FACT_REVIEWS_WEATHER";
+
+select business_name, date, temperature_min, temperature_max, precipitation, stars from "PROJECTYELPRATINGSWEATHER"."DW"."FACT_REVIEWS_WEATHER";
